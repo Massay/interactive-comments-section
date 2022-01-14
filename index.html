@@ -37,8 +37,8 @@
       >. Coded by <a href="#">Massay Bah</a>.
     </div>
 
-    <div id="app">
-      <div class="h-screen bg-white sm:w-4/6 sm:mx-auto" v-if="appData != null">
+    <div id="app" class="mb-5">
+      <div class="bg-white sm:w-4/6 sm:mx-auto" v-if="appData != null">
         <div v-for="(comment, index) in appData.comments" :key="index">
           <!-- Start Comment Card -->
           <div
