@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Interactive comments section</title>
+
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <!-- Pull dynamic content from the data.json file -->
+
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="#">Massay Bah</a>.
+    </div>
+
+    <div id="app">
+      <div class="h-screen bg-white sm:w-4/6 sm:mx-auto">
+        <div v-for="(comment, index) in appData.comments" :key="index">
+          <!-- Start Comment Card -->
+          <div
+            class="mx-2 my-3 sm:py-5 sm:px-4 border rounded-md block sm:flex"
+          >
+            <div
+              class="left rounded-md bg-blue-50 hidden sm:flex sm:self-center s sm:flex-col items-center ml-2"
+            >
+              <button class="py-1 px-5">+</button>
+              <span class="text-sky-800 font-extrabold">{{comment.score}}</span>
+              <button class="py-1 px-5 rounded-md">-</button>
+            </div>
+
+            <div>
+              <div
+                class="comment-details flex items-center justify-start px-4 py-3 attribution"
+              >
+                <div class="w-12 h-12 bg-blue-400 rounded-full mr-4">
+                  <img :src="comment.user.image.png" alt="" />
+                </div>
+                <p class="mr-4 font-semibold">{{comment.user.username}}</p>
+                <span>{{ comment.createdAt }}</span>
+                <div class="ml-auto items-center hidden sm:flex">
+                  <span class="mx-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 font-extrabold"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                      />
+                    </svg>
+                  </span>
+                  <span class="font-extrabold text-lg">Reply</span>
+                </div>
+              </div>
+              <div class="comment-section mt-0">
+                <p class="px-4 sm:text-md text-2xl leading-normal">
+                  {{comment.content}}
+                </p>
+              </div>
+              <div class="btns flex justify-between px-4 py-2 sm:hidden">
+                <div class="left rounded-md bg-blue-50">
+                  <button class="py-3 px-5">+</button>
+                  <span class="text-sky-800 font-extrabold"
+                    >{{comment.score}}</span
+                  >
+                  <button class="py-3 px-5 rounded-md">-</button>
+                </div>
+                <div class="right flex items-center">
+                  <span class="mx-1"
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 font-extrabold"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                      />
+                    </svg>
+                  </span>
+                  <span class="font-extrabold">Reply</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Comment Card -->
+          <div class="flex mx-2 my-3">
+            <div class="flex flex-col w-full border-l-2 border-gray-300">
+              <!-- start Reply card -->
+              <div
+                class="replies p-3 rounded-md ml-6 my-1 border"
+                v-for="(reply, index) in comment.replies"
+                :key="index"
+              >
+                <div class="flex items-center justify-between py-4">
+                  <img
+                    class="mr-5 py-3 px-2"
+                    :src="reply.user.image.png"
+                    alt=""
+                  />
+                  <span class="font-semibold">{{ reply.user.username }}</span>
+                  <span>{{ reply.createdAt }}</span>
+                </div>
+                <p>
+                  <span class="text-blue-400">@{{ reply.replyingTo }} </span> {{
+                  reply.content}}
+                </p>
+                <div class="bg-white">
+                  <div class="btns flex justify-between py-2">
+                    <div class="left rounded-md bg-blue-50">
+                      <button class="py-3 px-5">+</button>
+                      <span class="text-sky-800 font-extrabold">{{reply.score}}</span>
+                      <button class="py-3 px-5 rounded-md">-</button>
+                    </div>
+                    <div class="right flex items-center">
+                      <span class="mx-1"
+                        ><svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-5 w-5 font-extrabold"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                          />
+                        </svg>
+                      </span>
+                      <span class="font-extrabold">Reply</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- end reply card -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const myStorage = window.localStorage;
+
+      const app = Vue.createApp({
+        data() {
+          return {
+            count: 4,
+            appData: {
+              comments: [],
+              currentUser: null,
+            },
+          };
+        },
+        mounted() {
+          if (myStorage.getItem("_app_data")) {
+            let data = myStorage.getItem("_app_data");
+            this.appData = JSON.parse(data);
+          } else {
+            fetch("data.json")
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+                myStorage.setItem("_app_data", JSON.stringify(data));
+                this.appData = data;
+                // check for existing local storage and if not found create a new one
+              });
+          }
+        },
+      });
+
+      const vm = app.mount("#app");
+    </script>
+  </body>
+</html>
